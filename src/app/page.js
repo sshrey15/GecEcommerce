@@ -1,6 +1,10 @@
 import React from 'react'
 import Navbar from './components/Navbar'
 import ShoppingCards from './components/ShoppingCards'
+import DropDown from './components/DropDown'
+import SearchBar from './components/SearchBar'
+
+
 
 const page = () => {
   return (
@@ -12,13 +16,28 @@ const page = () => {
 <div>
 <Navbar/>
 </div>
+<div >
+
+</div>
 
 
 <div class="pt-32  bg-white">
 <h1 class="text-center text-2xl font-bold text-gray-800">All Products</h1>
+
+</div>
+<div>
+	<div className='m-10 flex'>
+	<SearchBar/>
+	<DropDown/>
+	</div>
+	<div>
+	
+	</div>
+	
+	
 </div>
 
-<div className='grid grid-cols-3 gap-1'>
+<div className='grid grid-cols-3 gap-5'>
   <ShoppingCards/>
   <ShoppingCards/>
   <ShoppingCards/>
