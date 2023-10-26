@@ -26,9 +26,12 @@ const page = () => {
 
 </div>
 <div>
-	<div className='m-10 flex'>
-	<SearchBar/>
-	<DropDown/>
+	<div className='m-10 flex grid grid-cols-2 gap-4'>
+		<div className='col-span-start'>
+		<SearchBar/>
+		</div>
+	
+	
 	</div>
 	<div>
 	
