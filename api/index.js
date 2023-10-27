@@ -2,9 +2,11 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import sellerRoute from "./routes/sell.js"
+import cors from "cors";
 dotenv.config();
 
 const app = express();
+
 
 const connect = async () => {
   try {
@@ -27,6 +29,8 @@ mongoose.connection.on("connected", () => {
 });
 
 app.use(express.json());
+
+app.use(cors());
 
 app.use("/api",sellerRoute);
 
