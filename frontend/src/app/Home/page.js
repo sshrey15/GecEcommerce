@@ -2,8 +2,8 @@
 import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation'; // Correct the import for useRouter
 import React, { useEffect, useState } from 'react';
-
-const Home = () => {
+import Navbar from '../components/Navbar';
+const Home =   () => {
   const [sellerData, setSellerData] = useState([]); // State to store fetched data
 
 
@@ -55,7 +55,7 @@ const Home = () => {
 
   const handleLogout = async () => {
     // Sign out the user
-    await signOut("google");
+    await signOut('google');
 
     // Go back to the previous page
     router.back();
@@ -63,7 +63,14 @@ const Home = () => {
   console.log(sellerData);
   return (
 
+    <>
+
+
     <div>
+      
+    <div>
+      <Navbar/>
+    </div>
       <button onClick={handleLogout}>Logout</button>
       <div>
 
@@ -83,6 +90,8 @@ const Home = () => {
         
       </div>
     </div>
+
+    </>
   );
 };
 
