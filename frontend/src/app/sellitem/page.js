@@ -1,7 +1,9 @@
 "use client"
+import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 
 function page() {
+  const {data} = useSession();
   const [sellerInfo, setSellerInfo] = useState({
     name: '',
     phone: '',
@@ -13,24 +15,58 @@ function page() {
     title: '',
     description: '',
     price: '',
+    image: null,
   });
 
   const handleSellerChange = (e) => {
     const { name, value } = e.target;
-    setSellerInfo({ ...sellerInfo, [name]: value });
+    if (name === 'yearOfStudy') {
+      // Ensure the value is within the range 1-4
+      const intValue = parseInt(value, 10);
+      if (intValue >= 1 && intValue <= 4) {
+        setSellerInfo({ ...sellerInfo, [name]: value });
+      }
+    } else {
+      setSellerInfo({ ...sellerInfo, [name]: value });
+    }
   };
-
   const handleItemChange = (e) => {
     const { name, value } = e.target;
     setItemInfo({ ...itemInfo, [name]: value });
   };
 
+  
+  // const handleImageChange = () => {
+  //   // Get the selected image file
+  //   const imageFile = e.target.files[0];
+  //   setItemInfo({ ...itemInfo, image: imageFile });
+  // };
+
   const handleSubmit = (e) => {
-    e.preventDefault();
-    // You can handle the form submission here
-    console.log('Seller Info:', sellerInfo);
-    console.log('Item Info:', itemInfo);
+    fetch("http://localhost:3001/api/sellers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        seller: sellerInfo,
+        item: itemInfo,
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
+  
 
   return (
     <div className="p-4 max-w-md mx-auto">
@@ -86,6 +122,8 @@ function page() {
             onChange={handleSellerChange}
             className="w-full px-3 py-2 border rounded"
             required
+            min="1"
+            max="4"
           />
         </div>
 
@@ -129,8 +167,19 @@ function page() {
             required
           />
         </div>
+{/* 
+        <div className="mb-4">
+          <label htmlFor="image" className="block">Image:</label>
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            onChange={handleImageChange}
+          />
+        </div> */}
 
-        <button type="submit" className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        <button  type="submit" className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
           Submit
         </button>
       </form>

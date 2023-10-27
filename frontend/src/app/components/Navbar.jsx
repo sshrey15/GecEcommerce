@@ -44,7 +44,7 @@ const Navbar = () => {
               Sign Out
             </button>
             <div className="text-black flex items-center ml-4 ">
-              <img src={data?.user?.image} width={50} height={50} alt="User Image" className='rounded-3xl' />
+              <img src={data?.user?.image} width={30} height={30} alt="User Image" className='rounded-3xl' />
               <span className="ml-2">Hi, {data.user.name}</span>
             </div>
           </div>
