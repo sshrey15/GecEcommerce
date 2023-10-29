@@ -2,10 +2,13 @@
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 
+import { useRouter } from 'next/navigation';
+
 function page() {
+  const router = useRouter();
   const {data} = useSession();
   const [sellerInfo, setSellerInfo] = useState({
-    name: '',
+    name: data?.user?.name,
     phone: '',
     department: '',
     yearOfStudy: '',
@@ -42,7 +45,12 @@ function page() {
   //   setItemInfo({ ...itemInfo, image: imageFile });
   // };
 
+
+  // ...
+  
   const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent the form from being submitted via a normal HTTP POST
+  
     fetch("http://localhost:3001/api/sellers", {
       method: "POST",
       headers: {
@@ -61,11 +69,17 @@ function page() {
       })
       .then((data) => {
         console.log("Success:", data);
+        alert("Item successfully listed!");
+        // After successful submission, navigate back to the previous page
+        router.back(); // Assumes you have imported and are using the router from Next.js
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   };
+  
+  // ...
+  
   
 
   return (
@@ -76,13 +90,13 @@ function page() {
         <div className="mb-4">
           <label htmlFor="name" className="block">Name:</label>
           <input
-            type="text"
-            id="name"
-            name="name"
-            value={sellerInfo.name}
-            onChange={handleSellerChange}
-            className="w-full px-3 py-2 border rounded"
-            required
+               type="text"
+               id="name"
+               name="name"
+               value={sellerInfo.name}
+               readOnly
+               className="w-full px-3 py-2 border rounded"
+               required
           />
         </div>
 

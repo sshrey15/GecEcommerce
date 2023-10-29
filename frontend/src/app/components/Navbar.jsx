@@ -40,7 +40,7 @@ const Navbar = () => {
             <button className="text-black mr-4 font-bold">Sell Item</button>
             </Link>
             
-            <button onClick={() => signOut('google')} className="text-black bg-red-100">
+            <button onClick={() => signOut('google')} className="text-black  bg-red-100">
               Sign Out
             </button>
             <div className="text-black flex items-center ml-4 ">
