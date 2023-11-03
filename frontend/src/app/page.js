@@ -3,6 +3,8 @@ import Image from "next/image";
 import Navbar from "./components/Navbar";
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
+import Link from "next/link";
+
 
 export default function Home() {
   const [sellerData, setSellerData] = useState([]);
@@ -33,7 +35,8 @@ export default function Home() {
                   key={seller._id}
                   className="flex flex-col items-center justify-center w-full h-full p-4 space-y-4 bg-pink-100 rounded-lg shadow-lg md:flex-row md:space-y-0 md:space-x-4 md:p-6 md:shadow-none transition-transform hover:scale-105 hover:shadow-xl hover:bg-gray-200"
                 >
-                  <div class="p-6">
+                  <div class="p-6
+                  ">
                     <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                       {seller.item.title}
                     </h5>
@@ -46,15 +49,21 @@ export default function Home() {
                     <p class="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
                     Sold By:{seller.seller.name}
                     </p>
+                  
                   </div>
                   <div class="p-6 pt-10">
-                    <button
-                      class="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button"
-                      data-ripple-light="true"
-                    >
-                      Book
-                    </button>
+                  <Link href={`/${seller._id}`} >
+                   
+                      <button
+                        class="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                        data-ripple-light="true"
+                      >
+                        Book
+                      </button>
+                   
+                  </Link>
+                 
                   </div>
                 </div>
               ))}

@@ -39,11 +39,14 @@ function page() {
   };
 
   
-  // const handleImageChange = () => {
-  //   // Get the selected image file
-  //   const imageFile = e.target.files[0];
-  //   setItemInfo({ ...itemInfo, image: imageFile });
-  // };
+  const handleImageChange = (e) => {
+    // Get the selected image files
+    const imageFiles = Array.from(e.target.files);
+    
+    // Update the state to store the array of image files
+    setItemInfo({ ...itemInfo, images: imageFiles });
+  };
+  
 
 
   // ...
@@ -78,6 +81,31 @@ function page() {
       });
   };
   
+
+  const handlesendOtp = (e) => {
+    fetch("http://localhost:3001/api/sellers", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        seller: sellerInfo.phone,
+    
+      }),})
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data);
+        alert("OTP sent successfully!");
+        // After successful submission, navigate back to the previous page
+        router.back(); // Assumes you have imported and are using the router from Next.js
+      })
+
+  }
   // ...
   
   
@@ -100,9 +128,11 @@ function page() {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="mb-4 flex space-x-1">
           <label htmlFor="phone" className="block">Phone Number:</label>
           <input
+           method="POST"
+
             type="tel"
             id="phone"
             name="phone"
@@ -111,6 +141,14 @@ function page() {
             className="w-full px-3 py-2 border rounded"
             required
           />
+          <button className='
+          bg-blue-500 
+          hover:bg-blue-700
+          text-white
+          font-bold
+          rounded-lg
+
+          '  onSubmit={handlesendOtp}>Send OTP</button>
         </div>
 
         <div className="mb-4">
@@ -181,17 +219,19 @@ function page() {
             required
           />
         </div>
-{/* 
+
         <div className="mb-4">
-          <label htmlFor="image" className="block">Image:</label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-        </div> */}
+  <label htmlFor="images" className="block">Images:</label>
+  <input
+    type="file"
+    id="images"
+    name="images"
+    accept="image/*"
+    multiple // Allow multiple file selection
+    onChange={handleImageChange}
+  />
+</div>
+
 
         <button  type="submit" className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
           Submit
