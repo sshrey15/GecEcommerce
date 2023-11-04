@@ -4,6 +4,8 @@ import Navbar from "./components/Navbar";
 import { useSession, signOut } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import {  useHistory } from 'react-router-dom';
+
 
 
 export default function Home() {
@@ -23,9 +25,9 @@ export default function Home() {
 
   return (
     <>
-      <div>
+      {/* <div>
         <Navbar />
-      </div>
+      </div> */}
       <div className="m-10">
         {data?.user ? (
           <>
@@ -52,12 +54,17 @@ export default function Home() {
                   
                   </div>
                   <div class="p-6 pt-10">
-                  <Link href={`/${seller._id}`} >
+                  <Link href={{
+                    pathname: `/${seller._id}`,
+                    query: { sellerId: seller._id },
+                  }}
+                   key={seller._id}>
                    
                       <button
                         class="select-none rounded-lg bg-pink-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         type="button"
                         data-ripple-light="true"
+                        
                       >
                         Book
                       </button>
