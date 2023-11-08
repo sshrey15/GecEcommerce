@@ -19,7 +19,7 @@ Welcome to **College Market**, the ultimate platform for buying and selling coll
 
 
 
-## Getting Started
+## Getting Starting
 
 1. **Clone the Repository**
    ```shell
