@@ -32,7 +32,7 @@ Welcome to **College Market**, the ultimate platform for buying and selling coll
    npm install
    ```
 
-3. **Set Up Environment Variables**
+3. **Set Up Environment Variabless**
    - Create a `.env.local` file in the root directory and add the required environment variables. These might include database configuration, API keys, and other sensitive information.
 
 4. **Run the Development Server**
