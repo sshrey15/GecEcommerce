@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 function page() {
   const router = useRouter();
@@ -82,30 +83,30 @@ function page() {
   };
   
 
-  const handlesendOtp = (e) => {
-    fetch("http://localhost:3001/api/sellers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        seller: sellerInfo.phone,
+  // const handlesendOtp = (e) => {
+  //   fetch("http://localhost:3001/api/sellers", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       seller: sellerInfo.phone,
     
-      }),})
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Success:", data);
-        alert("OTP sent successfully!");
-        // After successful submission, navigate back to the previous page
-        router.back(); // Assumes you have imported and are using the router from Next.js
-      })
+  //     }),})
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       console.log("Success:", data);
+  //       alert("OTP sent successfully!");
+  //       // After successful submission, navigate back to the previous page
+  //       router.back(); // Assumes you have imported and are using the router from Next.js
+  //     })
 
-  }
+  // }
   // ...
   
   
@@ -131,7 +132,7 @@ function page() {
         <div className="mb-4 flex space-x-1">
           <label htmlFor="phone" className="block">Phone Number:</label>
           <input
-           method="POST"
+           
 
             type="tel"
             id="phone"
@@ -141,14 +142,14 @@ function page() {
             className="w-full px-3 py-2 border rounded"
             required
           />
-          <button className='
+          {/* <button className='
           bg-blue-500 
           hover:bg-blue-700
           text-white
           font-bold
           rounded-lg
 
-          '  onSubmit={handlesendOtp}>Send OTP</button>
+          '  onSubmit={handlesendOtp}>Send OTP</button> */}
         </div>
 
         <div className="mb-4">
@@ -221,21 +222,25 @@ function page() {
         </div>
 
         <div className="mb-4">
-  <label htmlFor="images" className="block">Images:</label>
-  <input
+  {/* <label htmlFor="images" className="block">Images:</label> */}
+  {/* <input
     type="file"
     id="images"
     name="images"
     accept="image/*"
     multiple // Allow multiple file selection
     onChange={handleImageChange}
-  />
+  /> */}
 </div>
 
-
-        <button  type="submit" className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+<Link>
+<button  type="submit" className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        
+        >
           Submit
         </button>
+</Link>
+
       </form>
     </div>
   );

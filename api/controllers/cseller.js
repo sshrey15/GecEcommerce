@@ -5,8 +5,8 @@ export const createSeller = async (req, res, next) => {
   if (!seller || !item) {
     return res.status(400).json({ message: 'Missing seller or item data' });
   }
-  const imagePaths = req.files.map((file) => file.path);
-  item.images = imagePaths;
+  // const imagePaths = req.files.map((file) => file.path);
+  // item.images = imagePaths;
   const newSeller = new Seller({ seller, item });
 
   try {
