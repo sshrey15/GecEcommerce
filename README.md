@@ -2,9 +2,9 @@
 
 Welcome to **College Market**, the ultimate platform for buying and selling college materials with 100% transparency. Whether you're a student looking to find affordable textbooks, lab equipment, or other college-related items, or you're interested in selling your gently used materials to fellow students, College Market has you covered. With our easy-to-use Next.js-powered website, you can connect with your college community like never before.
 
-## Features
+## Featurs
 
-- **User-Friendly Interface:** Our website is designed with a clean and intuitive user interface, making it easy for users to navigate and find what they need.
+- **Use-Friendly Interface:** Our website is designed with a clean and intuitive user interface, making it easy for users to navigate and find what they need.
 
 - **Material Listings:** Easily list your college materials, such as textbooks, notes, lab equipment, and more. Provide detailed descriptions and images to attract potential buyers.
 
