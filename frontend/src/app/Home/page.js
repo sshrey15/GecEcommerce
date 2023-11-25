@@ -3,6 +3,7 @@ import { signIn, signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation'; // Correct the import for useRouter
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
+import { images } from '../../../next.config';
 const Home =   () => {
   const [sellerData, setSellerData] = useState([]); // State to store fetched data
 
@@ -84,6 +85,16 @@ const Home =   () => {
                 <p>Name: {seller.seller.name}</p>
             <p>Phone: {seller.seller.phone}</p>
             <p>Department: {seller.seller.department}</p>
+
+            {/* Display images */}
+    {seller.item.images && (
+      <div>
+        <p>Images:</p>
+        {seller.item.images.map((image, index) => (
+          <img key={index} src={`http://localhost:3001/${image}`} alt={`Image ${index}`} />
+        ))}
+      </div>
+    )}
               </li> // Adjust to match your data structure
             ))}
           </ul>

@@ -40,12 +40,26 @@ function page() {
   };
 
   
+  // const handleImageChange = (e) => {
+  //   // Get the selected image files
+  //   const imageFiles = Array.from(e.target.files);
+    
+  //   // Update the state to store the array of image files
+  //   setItemInfo({ ...itemInfo, images: imageFiles });
+  // };
+
   const handleImageChange = (e) => {
     // Get the selected image files
     const imageFiles = Array.from(e.target.files);
-    
+  
     // Update the state to store the array of image files
     setItemInfo({ ...itemInfo, images: imageFiles });
+  
+    // Also update the FormData to include the images
+    const formData = new FormData();
+    formData.append('images', imageFiles);
+  
+    // Now you can use formData to send the files along with other data in your fetch request
   };
   
 
@@ -58,7 +72,7 @@ function page() {
     fetch("http://localhost:3001/api/sellers", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
       body: JSON.stringify({
         seller: sellerInfo,
@@ -114,7 +128,7 @@ function page() {
   return (
     <div className="p-4 max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-4">Seller Information</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         {/* Seller Information */}
         <div className="mb-4">
           <label htmlFor="name" className="block">Name:</label>
@@ -222,6 +236,18 @@ function page() {
         </div>
 
         <div className="mb-4">
+  <label htmlFor="images" className="block">Images:</label>
+  <input
+    type="file"
+    id="images"
+    name="images"
+    accept="image/png ,image/jpeg,image/jpg"
+    multiple // Allow multiple file selection
+    onChange={handleImageChange}
+  />
+</div>
+
+        <div className="mb-4">
   {/* <label htmlFor="images" className="block">Images:</label> */}
   {/* <input
     type="file"
@@ -233,13 +259,13 @@ function page() {
   /> */}
 </div>
 
-<Link>
+
 <button  type="submit" className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         
         >
           Submit
         </button>
-</Link>
+
 
       </form>
     </div>

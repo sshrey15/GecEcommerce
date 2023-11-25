@@ -11,19 +11,30 @@ const ProductDetail = () => {
     if (productId) {
       fetch(`http://localhost:3001/api/sellers/${productId}`)
         .then((response) => response.json())
-        .then((data) => {
-          setProduct(data);
-        })
+        // .then((data) => {
+        //   // Transform the image paths before setting the product data in state
+        //   const transformedProduct = {
+        //     ...data,
+        //     item: {
+        //       ...data.item,
+        //       images: data.item.images.map((path) => path.replace(/\\/g, '/')),
+        //     },
+        //   };
+        //   setProduct(transformedProduct);
+        // })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
     }
   }, [productId]);
 
+
+  
   return (
     <>
       {product ? (
         <div key={product._id}>
+          <img src={`http://localhost:3001/${product.item.images[0]}`} alt="Product" />
           <h1>{product.item.title}</h1>
           <p>{product.item.description}</p>
           <p>Price: ₹{product.item.price}/-</p>

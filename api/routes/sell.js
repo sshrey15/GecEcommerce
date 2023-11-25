@@ -21,6 +21,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+
 // Create a new CSeller
 router.post('/sellers', upload.array('images', 5), createSeller);
 

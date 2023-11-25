@@ -1,12 +1,17 @@
 import Seller from '../models/seller.js';
 
+
+
 export const createSeller = async (req, res, next) => {
+  console.log('Request Body:', req.body);
+  console.log('Files:', req.files);
+
   const { seller, item } = req.body;
-  if (!seller || !item) {
+  if (!seller || !item || !req.files) {
     return res.status(400).json({ message: 'Missing seller or item data' });
   }
-  // const imagePaths = req.files.map((file) => file.path);
-  // item.images = imagePaths;
+  const imagePaths = req.files.map((file) => file.path);
+  item.images = imagePaths;
   const newSeller = new Seller({ seller, item });
 
   try {

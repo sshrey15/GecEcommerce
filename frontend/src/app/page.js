@@ -44,8 +44,7 @@ export default function Home() {
                   key={seller._id}
                   className="flex flex-col items-center justify-center w-full h-full p-4 space-y-4 bg-pink-100 rounded-lg shadow-lg md:flex-row md:space-y-0 md:space-x-4 md:p-6 md:shadow-none transition-transform hover:scale-105 hover:shadow-xl hover:bg-gray-200"
                 >
-                  <div class="p-6
-                  ">
+                  <div class="p-6">
 
                       {/* <Image
                         src={seller.item.images[0]}
@@ -53,7 +52,7 @@ export default function Home() {
                         width={200}
                         height={200}
                       /> */}
-                      {/* <Image 
+                      {/* {/* <Image 
                       src={seller.item.images[0]}
                       alt={seller.item.title}
                       width={200}
