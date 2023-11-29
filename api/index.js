@@ -11,7 +11,7 @@ import serveStatic from "serve-static";
 dotenv.config();
 
 const app = express();
-
+const PORT = process.env.PORT || 3001;
 
 
 const storage = multer.diskStorage({
@@ -90,7 +90,7 @@ app.use((err,req,res,next)=>{
     return res.status(errorStatus).json(errorMessage);
 })
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
   connect();
   console.log(`Server is running on port 3001`);
 });
