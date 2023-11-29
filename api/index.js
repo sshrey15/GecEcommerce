@@ -51,6 +51,10 @@ app.post('/api/upload', cors(), upload.array('images'), async (req, res) => {
   }
 });
 
+app.get('/',(req,res)=>{
+  res.send("hello");
+})
+
 const connect = async () => {
   try {
     await mongoose.connect(process.env.MONGO, {
@@ -90,7 +94,6 @@ app.use((err,req,res,next)=>{
     return res.status(errorStatus).json(errorMessage);
 })
 
-app.send("hello");
 
 app.listen(PORT, () => {
   connect();
