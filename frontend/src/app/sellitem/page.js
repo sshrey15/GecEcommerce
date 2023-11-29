@@ -19,8 +19,10 @@ function page() {
     title: '',
     description: '',
     price: '',
-    image: null,
   });
+
+  const [images, setImages] = useState([]);
+
 
   const handleSellerChange = (e) => {
     const { name, value } = e.target;
@@ -40,88 +42,46 @@ function page() {
   };
 
   
-  // const handleImageChange = (e) => {
-  //   // Get the selected image files
-  //   const imageFiles = Array.from(e.target.files);
-    
-  //   // Update the state to store the array of image files
-  //   setItemInfo({ ...itemInfo, images: imageFiles });
-  // };
+
 
   const handleImageChange = (e) => {
-    // Get the selected image files
-    const imageFiles = Array.from(e.target.files);
+    console.log(e.target.files);
+    setImages(Array.from(e.target.files));
+  };
+
+
+  // ...
   
-    // Update the state to store the array of image files
-    setItemInfo({ ...itemInfo, images: imageFiles });
+  const handleSubmit =  (e) => {
+    e.preventDefault();
   
-    // Also update the FormData to include the images
     const formData = new FormData();
-    formData.append('images', imageFiles);
   
-    // Now you can use formData to send the files along with other data in your fetch request
-  };
-  
-
-
-  // ...
-  
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the form from being submitted via a normal HTTP POST
-  
-    fetch("http://localhost:3001/api/sellers", {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: JSON.stringify({
-        seller: sellerInfo,
-        item: itemInfo,
-      }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Success:", data);
-        alert("Item successfully listed!");
-        // After successful submission, navigate back to the previous page
-        router.back(); // Assumes you have imported and are using the router from Next.js
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  };
-  
-
-  // const handlesendOtp = (e) => {
-  //   fetch("http://localhost:3001/api/sellers", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       seller: sellerInfo.phone,
+    formData.append('seller', JSON.stringify(sellerInfo));
+    formData.append('item', JSON.stringify(itemInfo));
     
-  //     }),})
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       console.log("Success:", data);
-  //       alert("OTP sent successfully!");
-  //       // After successful submission, navigate back to the previous page
-  //       router.back(); // Assumes you have imported and are using the router from Next.js
-  //     })
+    for (let i = 0; i < images.length; i++) {
+      formData.append('images', images[i]);
+    }
+  
+    fetch("http://localhost:3001/api/upload", {
+      method: "POST",
+      body: formData,
+    })
+    .then((response) => {
+      console.log('Response:', response);
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Success:", data);
+      alert("Item successfully listed!");
+      router.push('/'); // Go back to the previous page
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  };
 
-  // }
-  // ...
   
   
 
@@ -247,17 +207,7 @@ function page() {
   />
 </div>
 
-        <div className="mb-4">
-  {/* <label htmlFor="images" className="block">Images:</label> */}
-  {/* <input
-    type="file"
-    id="images"
-    name="images"
-    accept="image/*"
-    multiple // Allow multiple file selection
-    onChange={handleImageChange}
-  /> */}
-</div>
+        
 
 
 <button  type="submit" className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"

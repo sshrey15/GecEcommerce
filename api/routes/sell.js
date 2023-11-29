@@ -1,5 +1,4 @@
 import express from 'express';
-import multer from 'multer';
 import {
   createSeller,
   editSeller,
@@ -10,20 +9,9 @@ import {
 
 const router = express.Router();
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Define the folder to store uploaded images
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
-  },
-});
-
-const upload = multer({ storage });
-
 
 // Create a new CSeller
-router.post('/sellers', upload.array('images', 5), createSeller);
+router.post('/sellers', createSeller);
 
 // Get all CSellers
 router.get('/sellers', getAllSellers);
