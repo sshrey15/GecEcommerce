@@ -26,7 +26,7 @@ const Footer = () => {
                   </ul>
               </div>
               <div>
-                  <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-grey">Follow us</h2>
+              <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">Follow us</h2>
                   <ul class="text-gray-500 dark:text-gray-400 font-medium">
                       <li class="mb-4">
                           <a href="https://github.com/themesberg/flowbite" class="hover:underline ">Github</a>
