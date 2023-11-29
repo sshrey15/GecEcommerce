@@ -90,6 +90,8 @@ app.use((err,req,res,next)=>{
     return res.status(errorStatus).json(errorMessage);
 })
 
+app.send("hello");
+
 app.listen(PORT, () => {
   connect();
   console.log(`Server is running on port 3001`);
