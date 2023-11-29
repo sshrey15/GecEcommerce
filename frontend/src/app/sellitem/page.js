@@ -23,7 +23,6 @@ function page() {
 
   const [images, setImages] = useState([]);
 
-
   const handleSellerChange = (e) => {
     const { name, value } = e.target;
     if (name === 'yearOfStudy') {
@@ -32,10 +31,18 @@ function page() {
       if (intValue >= 1 && intValue <= 4) {
         setSellerInfo({ ...sellerInfo, [name]: value });
       }
+    } else if (name === 'phone') {
+      // Remove any non-digit characters from the phone number
+      const newValue = value.replace(/\D/g, '');
+      // Ensure the phone number does not contain more than 10 digits
+      if (newValue.length <= 10) {
+        setSellerInfo({ ...sellerInfo, [name]: newValue });
+      }
     } else {
       setSellerInfo({ ...sellerInfo, [name]: value });
     }
   };
+  
   const handleItemChange = (e) => {
     const { name, value } = e.target;
     setItemInfo({ ...itemInfo, [name]: value });

@@ -17,7 +17,7 @@ const Navbar = () => {
    
     <nav className="bg-white drop-shadow-lg sticky top-0 z-50">
     <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 md:flex-row">
-      <a href="https://flowbite.com/" className="flex items-center">
+      <a className="flex items-center">
         <span className="text-2xl font-semibold whitespace-nowrap text-black">GecEcom</span>
       </a>
       <div className="flex md:order-2">
