@@ -71,7 +71,7 @@ function page() {
       formData.append('images', images[i]);
     }
   
-    fetch("http://localhost:3001/api/upload", {
+    fetch("https://ecomproject1.onrender.com/api/upload", {
       method: "POST",
       body: formData,
     })

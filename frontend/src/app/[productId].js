@@ -9,7 +9,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     if (productId) {
-      fetch(`http://localhost:3001/api/sellers/${productId}`)
+      fetch(`https://ecomproject1.onrender.com/api/sellers/${productId}`)
         .then((response) => response.json())
         // .then((data) => {
         //   // Transform the image paths before setting the product data in state
@@ -34,7 +34,7 @@ const ProductDetail = () => {
     <>
       {product ? (
         <div key={product._id}>
-          <img src={`http://localhost:3001/${product.item.images[0]}`} alt="Product" />
+          <img src={`https://ecomproject1.onrender.com/${product.item.images[0]}`} alt="Product" />
           <h1>{product.item.title}</h1>
           <p>{product.item.description}</p>
           <p>Price: ₹{product.item.price}/-</p>

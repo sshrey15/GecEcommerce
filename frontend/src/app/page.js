@@ -19,7 +19,7 @@ export default function Home() {
   const { session, data } = useSession();
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/sellers`)
+    fetch(`https://ecomproject1.onrender.com/api/sellers`)
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
@@ -142,36 +142,40 @@ export default function Home() {
             </div>
           </form>
           <div className="flex-grow">
-            <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {currentItems.map((seller) => (
-                <div
-                  key={seller._id}
-                  className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-full"
-                >
-                  <div className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
-                    <div>
-                      <Image
-                        key={0}
-                        src={`http://localhost:3001/${seller.images[0]}`}
-                        alt={`${seller.item.title} image`}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                    </div>
-                    <p class="absolute bottom-0 left-0 mb-2 ml-2 px-2 py-1 font-sans text-sm antialiased font-bold text-white bg-blue-600 rounded">
-                      Sold By: {seller.seller.name}
-                    </p>
-                  </div>
-                  <div class="p-6">
-                    <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                      {seller.item.title}
-                    </h5>
-                    <p class="inline-block px-3 py-1 font-sans text-2xl antialiased font-bold leading-relaxed text-[#25D366] ">
-                      ₹{seller.item.price}/-
-                    </p>
-                  </div>
-                  <div class="p-6 pt-0">
-                    {/* <Link
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {currentItems.map((seller) => (
+            <div
+              key={seller._id}
+              className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-full"
+            
+            >
+              <div className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40"
+            
+                                 >
+                <div>
+                <Image
+                  key={0}
+                  src={`https://ecomproject1.onrender.com/${seller.images[0]}`}
+                  alt={`${seller.item.title} image`}
+                  layout="fill"
+                  objectFit="cover"
+                  
+                />
+                </div>
+                <p class="absolute bottom-0 left-0 mb-2 ml-2 px-2 py-1 font-sans text-sm antialiased font-bold text-white bg-blue-600 rounded">
+                  Sold By: {seller.seller.name}
+                </p>
+              </div>
+              <div class="p-6">
+                <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                  {seller.item.title}
+                </h5>
+                <p class="inline-block px-3 py-1 font-sans text-2xl antialiased font-bold leading-relaxed text-[#25D366] ">
+                  ₹{seller.item.price}/-
+                </p>
+              </div>
+              <div class="p-6 pt-0">
+                {/* <Link
                   href={{
                     pathname: `/${seller._id}`,
                     query: { sellerId: seller._id },
