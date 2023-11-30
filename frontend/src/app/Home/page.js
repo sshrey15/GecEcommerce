@@ -12,7 +12,7 @@ const Home =   () => {
     () => {
         
       // Make a GET request to your Express.js backend to fetch trending videos
-      fetch(`http://localhost:3001/api/sellers`)
+      fetch(`https://ecomproject1.onrender.com/api/sellers`)
         .then((response) => response.json())
         .then((data) => {
           setSellerData(data);
