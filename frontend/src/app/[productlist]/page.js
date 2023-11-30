@@ -7,7 +7,7 @@ const Home = ({ searchParams }) => {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3001/api/sellers`)
+        fetch(`https://ecomproject1.onrender.com/api/sellers`)
           .then((response) => response.json())
           .then((data) => {
             setSellerData(data);

@@ -91,7 +91,7 @@ const Home =   () => {
       <div>
         <p>Images:</p>
         {seller.item.images.map((image, index) => (
-          <img key={index} src={`http://localhost:3001/${image}`} alt={`Image ${index}`} />
+          <img key={index} src={`https://ecomproject1.onrender.com/${image}`} alt={`Image ${index}`} />
         ))}
       </div>
     )}

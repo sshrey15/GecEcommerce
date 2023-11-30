@@ -8,6 +8,6 @@ const nextConfig = {
 
 module.exports = {
     images: {
-      domains: ['localhost'],
+      domains: ['ecomproject1.onrender.com'],
     },
   };
