@@ -185,6 +185,7 @@ export default function Home() {
                     <div class="flex space-x-2">
                       <button
                         onClick={() => {
+                          //shreu
                           console.log("Clicked");
                           console.log("hi");
                           openModal(
