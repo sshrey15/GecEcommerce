@@ -72,7 +72,7 @@ const Landing = () => {
 
             <p class="mx-auto mt-6 max-w-2xl text-center text-gray-500">Second year Computer Engineering students from Goa Engineering college, having the passion to build a tech around every problem we discover</p>
         </div>
-    </div>
+    
 
     <div class="flex flex-wrap justify-center">
 
@@ -155,6 +155,7 @@ const Landing = () => {
 
        
 
+    </div>
     </div>
 </section>
 
