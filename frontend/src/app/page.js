@@ -27,7 +27,7 @@ export default function Home() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }, []);
+  }, [session]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImage, setModalImage] = useState("");
@@ -84,6 +84,13 @@ export default function Home() {
       setCurrentPage(currentPage - 1);
     }
   };
+
+  const handleDelete = (sellerId) => {
+    // Remove the deleted item from the state
+    setSellerData(sellerData.filter(seller => seller._id !== sellerId));
+  };
+
+
 
   return (
     <div className="m-4 sm:m-10">
@@ -147,6 +154,15 @@ export default function Home() {
                   key={seller._id}
                   className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-full"
                 >
+                  {data?.user?.email === seller.seller.email && (
+                    <button
+                      onClick={() => handleDelete(seller._id)}
+                      class="absolute top-0 right-0 m-2 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-red-600 text-white shadow-md hover:bg-red-700 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                      type="button"
+                    >
+                      Delete
+                    </button>
+                  )}
                   <div className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
                     <div>
                       <Image
