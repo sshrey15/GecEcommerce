@@ -60,7 +60,7 @@ const Landing = () => {
                
 
                 <section class="bg-white">
-    <div class="h-[32rem] bg-gray-100">
+    <div class="h-[20rem] bg-gray-100">
         <div class="container mx-auto px-6 py-10">
             <h1 class="text-center text-3xl font-semibold capitalize text-gray-800 lg:text-4xl">The Team Behind this</h1>
 
@@ -71,6 +71,7 @@ const Landing = () => {
             </div>
 
             <p class="mx-auto mt-6 max-w-2xl text-center text-gray-500">Second year Computer Engineering students from Goa Engineering college, having the passion to build a tech around every problem we discover</p>
+        </div>
         </div>
     
 
@@ -156,7 +157,7 @@ const Landing = () => {
        
 
     </div>
-    </div>
+  
 </section>
 
 
