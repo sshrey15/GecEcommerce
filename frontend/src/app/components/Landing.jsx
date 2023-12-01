@@ -17,7 +17,7 @@ const Landing = () => {
                     <div class="container mx-auto px-6 py-16 text-center">
                         <div class="mx-auto max-w-lg">
                             <h1 class="text-3xl font-bold text-gray-800 lg:text-4xl">Sell your College products with one click </h1>
-                            <p class="mt-6 text-gray-500">Our tech unables the students to access engineering course products at ease, with one click talk to the seller of the product no comissions for the middle men</p>
+                            <p class="mt-6 text-gray-500">Our tech enables the students to access engineering course products at ease, with one click talk to the seller of the product no comissions for the middle men</p>
                             <div class="g-signin2" data-onsuccess="onSignIn"></div>
                             <p class="mt-3 text-sm text-gray-400">Get Started</p>
                         </div>
