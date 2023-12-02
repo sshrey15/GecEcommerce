@@ -1,6 +1,6 @@
 # GEC Ecommerce Website
 
-This project is a simple ecommerce website built with Next.js, React, and other modern web technologies.
+This project is a simple ecommerce website built with Next.js, React, and other modern web technologies..
 
 ## Features
 
