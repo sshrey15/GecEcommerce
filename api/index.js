@@ -14,12 +14,13 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/'); // Define the folder to store uploaded images
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '-' + file.originalname);
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
   },
 });
 
@@ -37,7 +38,7 @@ app.post('/api/upload', cors(), upload.array('images'), async (req, res) => {
     const seller = new Seller({
       seller: sellerData,
       item: itemData,
-      images: req.files.map(file => file.path), // Map the files array to an array of file paths
+      images: req.files.map(file => file.path), 
     });
 
     // Save the seller document
@@ -54,6 +55,9 @@ app.post('/api/upload', cors(), upload.array('images'), async (req, res) => {
 app.get('/',(req,res)=>{
   res.send("hello");
 })
+
+
+app.use('/api/uploads', express.static(path.join(__dirname, 'api', 'uploads')));
 
 
 
@@ -83,10 +87,10 @@ app.use(express.json());
 
 app.use(cors());
 
-app.use('/uploads',express.static('uploads'));
+app.use('/uploads',express.static('uploads', {maxAge: 86400000}));
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
-app.use('/api/uploads', serveStatic(path.join(__dirname, 'api', 'uploads')));
+app.use('/api/uploads', serveStatic(path.join(__dirname, 'api', 'uploads'), {maxAge: 86400000}));
 
 app.use("/api",sellerRoute);
 

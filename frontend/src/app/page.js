@@ -148,6 +148,7 @@ export default function Home() {
           </form>
           <div className="flex-grow">
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+             
               {currentItems.map((seller) => (
                 <div
                   key={seller._id}
