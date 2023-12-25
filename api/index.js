@@ -23,7 +23,15 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  fileFilter: (req, file, cb) => {
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+  },
+});
 
 app.post('/api/upload', cors(), upload.array('images'), async (req, res) => {
   
@@ -76,7 +84,6 @@ mongoose.connection.on("connected", () => {
 
 
 app.use(express.json());
-
 app.use(cors());
 
 app.use('/uploads',express.static('uploads'));

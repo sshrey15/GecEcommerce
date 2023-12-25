@@ -169,6 +169,7 @@ export default function Home() {
                         alt={`${seller.item.title} image`}
                         layout="fill"
                         objectFit="cover"
+                        loading="eager"
                       />
                     </div>
                     <p class="absolute bottom-0 left-0 mb-2 ml-2 px-2 py-1 font-sans text-sm antialiased font-bold text-white bg-blue-600 rounded">
@@ -194,10 +195,12 @@ export default function Home() {
                     <div class="flex space-x-2">
                       <button
                         onClick={() => {
-                          const imageUrl = `https://ecomproject1.onrender.com/uploads/${seller.images[0]}`;
+                          const imageUrl = `https://ecomproject1.onrender.com/${seller.images[0]}`;
                           console.log(imageUrl);
 
-                          openModal(imageUrl);
+                          openModal(
+                            imageUrl
+                          );
                         }}
                         class="align-middle select-none mr-10 font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                         type="button"
