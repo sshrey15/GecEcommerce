@@ -196,8 +196,7 @@ export default function Home() {
                       <button
                         onClick={() => {
                           //shreu
-                          console.log("Clicked");
-                          console.log("hi");
+                          console.log(seller.images[0]);
                           openModal(
                             `https://ecomproject1.onrender.com/${seller.images[0]}`
                           );
