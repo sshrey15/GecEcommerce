@@ -195,10 +195,9 @@ export default function Home() {
                       <button
                         onClick={() => {
                           //shreu
-                          console.log("Clicked");
-                          console.log("hi");
+                         
                           openModal(
-                            `https://ecomproject1.onrender.com/${seller.images[0]}`
+                            `https://ecomproject1.onrender.com/api/sellers/${seller.images[0]}`
                           );
                         }}
                         class="align-middle select-none mr-10 font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
