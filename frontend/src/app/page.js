@@ -165,7 +165,7 @@ export default function Home() {
                     <div>
                       <Image
                         key={0}
-                        src={`https://ecomproject1.onrender.com/sellers/${seller.images[0]}`}
+                        src={`https://ecomproject1.onrender.com/${seller.images[0]}`}
                         alt={`${seller.item.title} image`}
                         layout="fill"
                         objectFit="cover"
