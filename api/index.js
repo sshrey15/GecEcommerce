@@ -12,40 +12,43 @@ import { createUploadthing} from "uploadthing/express";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3001;
 
 
 
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Define the folder to store uploaded images
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  },
+});
 
+const upload = multer({ storage });
 
-const f = createUploadthing();
+app.post('/api/upload', cors(), upload.array('images'), async (req, res) => {
+  
 
-export const uploadRouter = {
-  sellerImages: f({
-    image: {
-      maxFileSize: "4MB", // Adjust limits as needed
-      maxFileCount: 4,
-      // Potentially add allowedMediaTypes for image types
-    },
-  }).onUploadComplete(async (data) => {
-    const imageUrls = data.files.map((file) => file.secure_url);
+  try {
+    // Parse the seller and item data
     const sellerData = JSON.parse(req.body.seller);
     const itemData = JSON.parse(req.body.item);
     const seller = new Seller({
       seller: sellerData,
       item: itemData,
-      images: imageUrls,
+      images: req.files.map(file => file.path), 
     });
-    try {
-      await seller.save();
-      res.status(200).json({ message: 'Image uploaded and data saved successfully' });
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Something went wrong' });
-    }
-  }),
-} 
 
+    // Save the seller document
+    await seller.save();
+
+    res.status(200).json({ message: 'Image uploaded and data saved successfully' });
+  }
+  catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Something went wrong' });
+  }
+});
 
 app.get('/',(req,res)=>{
   res.send("hello");
@@ -74,20 +77,21 @@ mongoose.connection.on("disconnected", () => {
 
 mongoose.connection.on("connected", () => {
   console.log("MongoDB connected");
+  console.log("====================================");
 });
+
 
 app.post("/api/upload", cors(), createUploadthingExpressHandler({ router: uploadRouter }), async (req, res) => {
   // No need for logic here, as it's handled in uploadRouter's onUploadComplete
 });
 
 app.use(express.json());
-
 app.use(cors());
 
-app.use('/uploads',express.static('uploads', {maxAge: 86400000}));
+app.use('/uploads',express.static('uploads'));
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
-app.use('/api/uploads', serveStatic(path.join(__dirname, 'api', 'uploads'), {maxAge: 86400000}));
+app.use('/api/uploads', serveStatic(path.join(__dirname, 'api', 'uploads')));
 
 app.use("/api",sellerRoute);
 
@@ -97,8 +101,7 @@ app.use((err,req,res,next)=>{
     return res.status(errorStatus).json(errorMessage);
 })
 
-
-app.listen(PORT, () => {
+app.listen(3001, () => {
   connect();
   console.log(`Server is running on port 3001`);
 });
