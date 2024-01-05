@@ -7,6 +7,7 @@ import multer from "multer";
 import Seller from "./models/seller.js";
 import path from "path";
 import serveStatic from "serve-static";
+import { createUploadthing} from "uploadthing/express";
 
 dotenv.config();
 
@@ -15,42 +16,36 @@ const PORT = process.env.PORT || 3001;
 
 
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Define the folder to store uploaded images
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  },
-});
 
-const upload = multer({ storage });
 
-app.post('/api/upload', cors(), upload.array('images'), async (req, res) => {
-  
+const f = createUploadthing();
 
-  try {
-    // Parse the seller and item data
+export const uploadRouter = {
+  sellerImages: f({
+    image: {
+      maxFileSize: "4MB", // Adjust limits as needed
+      maxFileCount: 4,
+      // Potentially add allowedMediaTypes for image types
+    },
+  }).onUploadComplete(async (data) => {
+    const imageUrls = data.files.map((file) => file.secure_url);
     const sellerData = JSON.parse(req.body.seller);
     const itemData = JSON.parse(req.body.item);
-
-    // Create a new seller document
     const seller = new Seller({
       seller: sellerData,
       item: itemData,
-      images: req.files.map(file => file.path), 
+      images: imageUrls,
     });
+    try {
+      await seller.save();
+      res.status(200).json({ message: 'Image uploaded and data saved successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Something went wrong' });
+    }
+  }),
+} 
 
-    // Save the seller document
-    await seller.save();
-
-    res.status(200).json({ message: 'Image uploaded and data saved successfully' });
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Something went wrong' });
-  }
-});
 
 app.get('/',(req,res)=>{
   res.send("hello");
@@ -81,7 +76,9 @@ mongoose.connection.on("connected", () => {
   console.log("MongoDB connected");
 });
 
-
+app.post("/api/upload", cors(), createUploadthingExpressHandler({ router: uploadRouter }), async (req, res) => {
+  // No need for logic here, as it's handled in uploadRouter's onUploadComplete
+});
 
 app.use(express.json());
 
