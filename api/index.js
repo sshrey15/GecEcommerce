@@ -18,7 +18,7 @@ const app = express();
 
 const f = createUploadthing();
 
-export const uploadRouter = {
+const uploadRouter = {
   sellerImages: f({
     image: {
       maxFileSize: "4MB", // Adjust limits as needed
