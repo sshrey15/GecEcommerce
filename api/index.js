@@ -18,7 +18,7 @@ const app = express();
 
 const f = createUploadthing();
 
-export const uploadRouter = {
+const uploadRouter = {
   sellerImages: f({
     image: {
       maxFileSize: "4MB", // Adjust limits as needed
@@ -63,10 +63,9 @@ mongoose.connection.on("disconnected", () => {
 
 mongoose.connection.on("connected", () => {
   console.log("MongoDB connected");
-  console.log("====================================");
 });
 
-app.post("/api/upload", cors(), createUploadthingExpressHandler({ router: uploadRouter }), async (req, res) => {
+app.post("/api/upload", cors(), createUploadthing({ router: uploadRouter }), async (req, res) => {
   // No need for logic here, as it's handled in uploadRouter's onUploadComplete
 });
 
