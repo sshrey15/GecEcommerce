@@ -64,11 +64,13 @@ mongoose.connection.on("disconnected", () => {
 mongoose.connection.on("connected", () => {
   console.log("MongoDB connected");
   console.log("====================================");
+  // shey
 });
 
 app.post("/api/upload", cors(), createUploadthingExpressHandler({ router: uploadRouter }), async (req, res) => {
   // No need for logic here, as it's handled in uploadRouter's onUploadComplete
 });
+
 
 
 app.use(express.json());
