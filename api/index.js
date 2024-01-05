@@ -15,48 +15,34 @@ const app = express();
 
 
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Define the folder to store uploaded images
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  },
-});
 
-const upload = multer({ storage });
+const f = createUploadthing();
 
-app.post('/api/upload', cors(), upload.array('images'), async (req, res) => {
-  
-
-  try {
-    // Parse the seller and item data
+export const uploadRouter = {
+  sellerImages: f({
+    image: {
+      maxFileSize: "4MB", // Adjust limits as needed
+      maxFileCount: 4,
+      // Potentially add allowedMediaTypes for image types
+    },
+  }).onUploadComplete(async (data) => {
+    const imageUrls = data.files.map((file) => file.secure_url);
     const sellerData = JSON.parse(req.body.seller);
     const itemData = JSON.parse(req.body.item);
     const seller = new Seller({
       seller: sellerData,
       item: itemData,
-      images: req.files.map(file => file.path), 
+      images: imageUrls,
     });
-
-    // Save the seller document
-    await seller.save();
-
-    res.status(200).json({ message: 'Image uploaded and data saved successfully' });
-  }
-  catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Something went wrong' });
-  }
-});
-
-app.get('/',(req,res)=>{
-  res.send("hello");
-})
-
-
-// app.use('/api/uploads', express.static(path.join(__dirname, 'api', 'uploads')));
-
+    try {
+      await seller.save();
+      res.status(200).json({ message: 'Image uploaded and data saved successfully' });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Something went wrong' });
+    }
+  }),
+} 
 
 
 const connect = async () => {
@@ -80,10 +66,10 @@ mongoose.connection.on("connected", () => {
   console.log("====================================");
 });
 
-
 app.post("/api/upload", cors(), createUploadthingExpressHandler({ router: uploadRouter }), async (req, res) => {
   // No need for logic here, as it's handled in uploadRouter's onUploadComplete
 });
+
 
 app.use(express.json());
 app.use(cors());
