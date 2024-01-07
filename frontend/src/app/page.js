@@ -20,8 +20,8 @@ export default function Home() {
   const { session, data } = useSession();
 
   useEffect(() => {
-    // fetch(`https://ecomproject1.onrender.com/api/sellers`)
-    fetch(`http://localhost:3001/api/sellers`)
+    fetch(`https://ecomproject1.onrender.com/api/sellers`)
+    // fetch(`http://localhost:3001/api/sellers`)
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
@@ -166,7 +166,7 @@ export default function Home() {
                             ? "/booksNotes.jpg"
                             : seller.item.title === "stationary"
                             ? "/stationary.jpg"
-                            : "/Drafter.jpeg"
+                            : "/Default.jpg"
                         }
                         alt={`${seller.item.title} image`}
                         layout="fill"

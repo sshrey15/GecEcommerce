@@ -59,8 +59,8 @@ function page() {
       seller: sellerInfo,
       item: itemInfo,
     };
-    // fetch("https://ecomproject1.onrender.com/api/sellers",{
-    fetch("http://localhost:3001/api/sellers", {
+    fetch("https://ecomproject1.onrender.com/api/sellers",{
+    // fetch("http://localhost:3001/api/sellers", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
