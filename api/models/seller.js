@@ -14,7 +14,7 @@ const sellerSchema = new mongoose.Schema({
     price: { type: Number, required: true },
     
   },
-  images: { type: [String], required: true},
+  
 });
 
 

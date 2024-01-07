@@ -1,39 +1,39 @@
-"use client"
-import { useSession } from 'next-auth/react';
-import React, { useState } from 'react';
+"use client";
+import { useSession } from "next-auth/react";
+import React, { useState } from "react";
 
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 function page() {
   const router = useRouter();
-  const {data} = useSession();
+  const { data } = useSession();
   const [sellerInfo, setSellerInfo] = useState({
     name: data?.user?.name,
-    phone: '',
-    department: '',
-    yearOfStudy: '',
+    phone: "",
+    department: "",
+    yearOfStudy: "",
   });
 
   const [itemInfo, setItemInfo] = useState({
-    title: '',
-    description: '',
-    price: '',
+    title: "",
+    description: "",
+    price: "",
   });
 
-  const [images, setImages] = useState([]);
+
 
   const handleSellerChange = (e) => {
     const { name, value } = e.target;
-    if (name === 'yearOfStudy') {
+    if (name === "yearOfStudy") {
       // Ensure the value is within the range 1-4
       const intValue = parseInt(value, 10);
       if (intValue >= 1 && intValue <= 4) {
         setSellerInfo({ ...sellerInfo, [name]: value });
       }
-    } else if (name === 'phone') {
+    } else if (name === "phone") {
       // Remove any non-digit characters from the phone number
-      const newValue = value.replace(/\D/g, '');
+      const newValue = value.replace(/\D/g, "");
       // Ensure the phone number does not contain more than 10 digits
       if (newValue.length <= 10) {
         setSellerInfo({ ...sellerInfo, [name]: newValue });
@@ -42,55 +42,44 @@ function page() {
       setSellerInfo({ ...sellerInfo, [name]: value });
     }
   };
-  
+
   const handleItemChange = (e) => {
     const { name, value } = e.target;
     setItemInfo({ ...itemInfo, [name]: value });
   };
 
-  
-
-
-  const handleImageChange = (e) => {
-    console.log(e.target.files);
-    setImages(Array.from(e.target.files));
-  };
 
 
   // ...
-  
-  const handleSubmit =  (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
   
-    const formData = new FormData();
-  
-    formData.append('seller', JSON.stringify(sellerInfo));
-    formData.append('item', JSON.stringify(itemInfo));
-    
-    for (let i = 0; i < images.length; i++) {
-      formData.append('images', images[i]);
-    }
-  
-    fetch("https://ecomproject1.onrender.com/api/upload", {
+    const data = {
+      seller: sellerInfo,
+      item: itemInfo,
+    };
+    // fetch("https://ecomproject1.onrender.com/api/sellers",{
+    fetch("http://localhost:3001/api/sellers", {
       method: "POST",
-      body: formData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
     })
-    .then((response) => {
-      console.log('Response:', response);
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Success:", data);
-      alert("Item successfully listed!");
-      router.push('/'); // Go back to the previous page
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+      .then((response) => {
+        console.log("Response:", response);
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Success:", data);
+        alert("Item successfully listed!");
+        router.push("/"); // Go back to the previous page
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
-
-  
-  
 
   return (
     <div className="p-4 max-w-md mx-auto">
@@ -98,23 +87,25 @@ function page() {
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         {/* Seller Information */}
         <div className="mb-4">
-          <label htmlFor="name" className="block">Name:</label>
+          <label htmlFor="name" className="block">
+            Name:
+          </label>
           <input
-               type="text"
-               id="name"
-               name="name"
-               value={sellerInfo.name}
-               readOnly
-               className="w-full px-3 py-2 border rounded"
-               required
+            type="text"
+            id="name"
+            name="name"
+            value={sellerInfo.name}
+            readOnly
+            className="w-full px-3 py-2 border rounded"
+            required
           />
         </div>
 
         <div className="mb-4 flex space-x-1">
-          <label htmlFor="phone" className="block">Phone Number:</label>
+          <label htmlFor="phone" className="block">
+            Phone Number:
+          </label>
           <input
-           
-
             type="tel"
             id="phone"
             name="phone"
@@ -134,7 +125,9 @@ function page() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="department" className="block">Department:</label>
+          <label htmlFor="department" className="block">
+            Department:
+          </label>
           <input
             type="text"
             id="department"
@@ -147,7 +140,9 @@ function page() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="yearOfStudy" className="block">Year of Study:</label>
+          <label htmlFor="yearOfStudy" className="block">
+            Year of Study:
+          </label>
           <input
             type="number"
             id="yearOfStudy"
@@ -165,20 +160,29 @@ function page() {
         <h2 className="text-2xl font-bold mb-4">Item Information</h2>
 
         <div className="mb-4">
-          <label htmlFor="title" className="block">Title:</label>
-          <input
-            type="text"
+          <label htmlFor="title" className="block">
+            Title:
+          </label>
+          <select
             id="title"
             name="title"
             value={itemInfo.title}
             onChange={handleItemChange}
             className="w-full px-3 py-2 border rounded"
             required
-          />
+          >
+            <option value="boiler">Boiler</option>
+            <option value="drafter">Drafter</option>
+            <option value="bomber">Bomber</option>
+            <option value="stationary">Stationary</option>
+            <option value="notes">Notes</option>
+          </select>
         </div>
 
         <div className="mb-4">
-          <label htmlFor="description" className="block">Description:</label>
+          <label htmlFor="description" className="block">
+            Description:
+          </label>
           <textarea
             id="description"
             name="description"
@@ -190,7 +194,9 @@ function page() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="price" className="block">Price:</label>
+          <label htmlFor="price" className="block">
+            Price:
+          </label>
           <input
             type="number"
             id="price"
@@ -202,28 +208,26 @@ function page() {
           />
         </div>
 
-        <div className="mb-4">
-  <label htmlFor="images" className="block">Images:</label>
-  <input
-    type="file"
-    id="images"
-    name="images"
-    accept="image/png ,image/jpeg,image/jpg"
-    multiple // Allow multiple file selection
-    onChange={handleImageChange}
-  />
-</div>
+        {/* <div className="mb-4">
+          <label htmlFor="images" className="block">
+            Images:
+          </label>
+          <input
+            type="file"
+            id="images"
+            name="images"
+            accept="image/png ,image/jpeg,image/jpg"
+            multiple // Allow multiple file selection
+            onChange={handleImageChange}
+          />
+        </div> */}
 
-        
-
-
-<button  type="submit" className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        
+        <button
+          type="submit"
+          className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Submit
         </button>
-
-
       </form>
     </div>
   );

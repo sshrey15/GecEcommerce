@@ -21,7 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     // fetch(`https://ecomproject1.onrender.com/api/sellers`)
-    fetch( `http://localhost:3001/api/sellers`)
+    fetch(`http://localhost:3001/api/sellers`)
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
@@ -31,17 +31,17 @@ export default function Home() {
       });
   }, [session]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalImage, setModalImage] = useState("");
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [modalImage, setModalImage] = useState("");
 
-  const openModal = (image) => {
-    setModalImage(image);
-    setIsModalOpen(true);
-  };
+  // const openModal = (image) => {
+  //   setModalImage(image);
+  //   setIsModalOpen(true);
+  // };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -94,17 +94,6 @@ export default function Home() {
 
   return (
     <div className="m-4 sm:m-10">
-      {isModalOpen && (
-        <Modal onClose={closeModal}>
-          <Image
-            src={modalImage}
-            alt="Modal image"
-            layout="fill"
-            objectFit="cover"
-          />
-        </Modal>
-      )}
-
       {data?.user ? (
         <div className="flex flex-col min-h-screen">
           <form
@@ -166,17 +155,28 @@ export default function Home() {
                     <div>
                       <Image
                         key={0}
-                        // src={`https://ecomproject1.onrender.com/${seller.images[0]}`}
-                        src={`http://localhost:3001/${seller.images[0]}`}
+                        src={
+                          seller.item.title === "bomber"
+                            ? "/Drafter.jpeg"
+                            : seller.item.title === "drafter"
+                            ? "/Drafter.jpeg"
+                            : seller.item.title === "boiler"
+                            ? "/BoilerSuit.jpeg"
+                            : seller.item.title === "notes"
+                            ? "/booksNotes.jpg"
+                            : seller.item.title === "stationary"
+                            ? "/stationary.jpg"
+                            : "/Drafter.jpeg"
+                        }
                         alt={`${seller.item.title} image`}
                         layout="fill"
                         objectFit="cover"
                         loading="eager"
                       />
                     </div>
-                    <p class="absolute bottom-0 left-0 mb-2 ml-2 px-2 py-1 font-sans text-sm antialiased font-bold text-white bg-blue-600 rounded">
+                    <div class="absolute bottom-0 left-0 mb-2 ml-2 px-2 py-1 font-sans text-sm antialiased font-bold text-white bg-blue-600 rounded flex items-center">
                       Sold By: {seller.seller.name}
-                    </p>
+                    </div>
                   </div>
                   <div class="p-6">
                     <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
@@ -185,6 +185,8 @@ export default function Home() {
                     <p class="inline-block px-3 py-1 font-sans text-2xl antialiased font-bold leading-relaxed text-[#25D366] ">
                       ₹{seller.item.price}/-
                     </p>
+                    <p class="mt-2 text-gray-600">{seller.item.description}</p>{" "}
+                    {/* New paragraph for description */}
                   </div>
                   <div class="p-6 pt-0">
                     {/* <Link
@@ -197,12 +199,7 @@ export default function Home() {
                     <div class="flex space-x-2">
                       <button
                         onClick={() => {
-                          //shreu
-                          console.log(seller.images[0]);
-                          // openModal(
-                          //   `https://ecomproject1.onrender.com/${seller.images[0]}`
-                          // );
-                          openModal(`http://localhost:3001/${seller.images[0]}`);
+                          openModal();
                         }}
                         class="align-middle select-none mr-10 font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                         type="button"
