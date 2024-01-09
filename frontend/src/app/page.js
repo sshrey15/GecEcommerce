@@ -18,10 +18,20 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { session, data } = useSession();
+  const [selectedOption, setSelectedOption] = useState("");
+  
+
+// Retrieve the submission date from local storage when the component mounts
+
+
+// ...
+
+// Display the submission date
+
 
   useEffect(() => {
-    fetch(`https://ecomproject1.onrender.com/api/sellers`)
-    // fetch(`http://localhost:3001/api/sellers`)
+    // fetch(`https://ecomproject1.onrender.com/api/sellers`)
+    fetch(`http://localhost:3001/api/sellers`)
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
@@ -31,27 +41,13 @@ export default function Home() {
       });
   }, [session]);
 
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [modalImage, setModalImage] = useState("");
-
-  // const openModal = (image) => {
-  //   setModalImage(image);
-  //   setIsModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setIsModalOpen(false);
-  // };
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-  };
-
-  const filteredSellers = sellerData.filter((seller) =>
-    seller.item.title.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
   const [itemsPerPage] = useState(8);
+
+  const filteredSellers = sellerData.filter(
+    (seller) =>
+      !selectedOption ||
+      seller.item.title.toLowerCase() === selectedOption.toLowerCase()
+  );
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -87,55 +83,21 @@ export default function Home() {
     }
   };
 
-  // const handleDelete = (sellerId) => {
-  //   // Remove the deleted item from the state
-  //   setSellerData(sellerData.filter(seller => seller._id !== sellerId));
-  // };
-
   return (
     <div className="m-4 sm:m-10">
       {data?.user ? (
-        <div className="flex flex-col min-h-screen">
-          <form
-            className="
-            max-w-md mx-auto mt-4 mb-10
-"
+        <div className="flex flex-col min-h-screen ">
+          <select
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(e.target.value)}
+            className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg my-5 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
           >
-            <label
-              for="default-search"
-              class="mb-2 text-sm font-medium text-gray-900 sr-only"
-            >
-              Search
-            </label>
-            <div class="relative">
-              <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                <svg
-                  class="w-4 h-4 text-gray-500"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-                  />
-                </svg>
-              </div>
-              <input
-                type="search"
-                id="default-search"
-                class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Search Mockups, Logos..."
-                required
-                onChange={handleSearch}
-                style={{ width: "100%" }} // Add this line
-              />
-            </div>
-          </form>
+            <option value="">All</option>
+            <option value="Bomber">Bomber</option>
+            <option value="Drafter">Drafter</option>
+            <option value="Boiler">Boiler</option>
+            <option value="Notes & Books">Notes & Books</option>
+          </select>
           <div className="flex-grow">
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {currentItems.map((seller) => (
@@ -156,16 +118,16 @@ export default function Home() {
                       <Image
                         key={0}
                         src={
-                          seller.item.title === "bomber"
+                          seller.item.title === "Bomber"
+                            ? "/bomber.jpg"
+                            : seller.item.title === "Drafter"
                             ? "/Drafter.jpeg"
-                            : seller.item.title === "drafter"
-                            ? "/Drafter.jpeg"
-                            : seller.item.title === "boiler"
-                            ? "/BoilerSuit.jpeg"
-                            : seller.item.title === "notes"
+                            : seller.item.title === "Boiler"
+                            ? "/BoilerSuits.jpg"
+                            : seller.item.title === "Notes & Books"
                             ? "/booksNotes.jpg"
-                            : seller.item.title === "stationary"
-                            ? "/stationary.jpg"
+                            : seller.item.title === "Stationary"
+                            ? "/Stationary.jpg"
                             : "/Default.jpg"
                         }
                         alt={`${seller.item.title} image`}
@@ -174,6 +136,7 @@ export default function Home() {
                         loading="eager"
                       />
                     </div>
+                   
                     <div class="absolute bottom-0 left-0 mb-2 ml-2 px-2 py-1 font-sans text-sm antialiased font-bold text-white bg-blue-600 rounded flex items-center">
                       Sold By: {seller.seller.name}
                     </div>
@@ -196,19 +159,10 @@ export default function Home() {
                   }}
                   key={seller._id}
                 > */}
-                    <div class="flex space-x-2">
-                      <button
-                        onClick={() => {
-                          openModal();
-                        }}
-                        class="align-middle select-none mr-10 font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-gray-900 text-white shadow-md shadow-gray-900/10 hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                        type="button"
-                      >
-                        View
-                      </button>
+                    <div class="flex space-x-2 items-center">
                       {/* </Link> */}
                       <button
-                        class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-green-600 text-white shadow-md hover:bg-green-700 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                        class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-12 rounded-lg bg-green-600 text-white shadow-md hover:bg-green-700 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
                         type="button"
                         onClick={() =>
                           window.open(

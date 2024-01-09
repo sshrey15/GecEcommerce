@@ -15,9 +15,11 @@ function page() {
     yearOfStudy: "",
   });
 
+
+
   const [itemInfo, setItemInfo] = useState({
-    title: "",
-    description: "",
+    title: "Boiler",
+    description: "" ,
     price: "",
   });
 
@@ -59,6 +61,7 @@ function page() {
       seller: sellerInfo,
       item: itemInfo,
     };
+    
     fetch("https://ecomproject1.onrender.com/api/sellers",{
     // fetch("http://localhost:3001/api/sellers", {
       method: "POST",
@@ -171,11 +174,11 @@ function page() {
             className="w-full px-3 py-2 border rounded"
             required
           >
-            <option value="boiler">Boiler</option>
-            <option value="drafter">Drafter</option>
-            <option value="bomber">Bomber</option>
-            <option value="stationary">Stationary</option>
-            <option value="notes">Notes</option>
+            <option value="Boiler">Boiler</option>
+            <option value="Drafter">Drafter</option>
+            <option value="Bomber">Bomber</option>
+            <option value="Stationary">Stationary</option>
+            <option value="Notes & Books">Notes & Books</option>
           </select>
         </div>
 
