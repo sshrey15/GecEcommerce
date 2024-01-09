@@ -30,8 +30,8 @@ export default function Home() {
 
 
   useEffect(() => {
-    // fetch(`https://ecomproject1.onrender.com/api/sellers`)
-    fetch(`http://localhost:3001/api/sellers`)
+    fetch(`https://ecomproject1.onrender.com/api/sellers`)
+    // fetch(`http://localhost:3001/api/sellers`)
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
