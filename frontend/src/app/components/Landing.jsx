@@ -24,7 +24,7 @@ const Landing = () => {
                           
                         </div>
                         <div className='h-full lg:h-1/2'>
-  <div className='lg:hidden'>
+  <div className='lg:hidden mt-5'>
     <Carousel autoPlay infiniteLoop>
       <div className='flex h-1/2 items-center justify-center'>
         <img className='h-100 object-cover' src="boilers.png" alt="Image description" />
