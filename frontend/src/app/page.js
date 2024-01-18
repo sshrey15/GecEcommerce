@@ -14,7 +14,6 @@ import { useHistory } from "react-router-dom";
 import Landing from "./components/Landing";
 import Loading from "./loading";
 
-
 export default function Home() {
   const [sellerData, setSellerData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,10 +29,12 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
+
         setIsloading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+
         setIsloading(false);
       });
   }, [session]);
@@ -45,8 +46,6 @@ export default function Home() {
       !selectedOption ||
       seller.item.title.toLowerCase() === selectedOption.toLowerCase()
   );
-
-  const [itemsPerPage] = useState(8);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
