@@ -121,11 +121,11 @@ export default function Home() {
                               : seller.item.title === "Drafter"
                               ? "/Drafter.jpeg"
                               : seller.item.title === "Boiler"
-                              ? "/BoilerSuits.jpg"
+                              ? "/boilers.png"
                               : seller.item.title === "Notes & Books"
                               ? "/booksNotes.jpg"
                               : seller.item.title === "Engineering Graphics Material"
-                              ? "/egMaterial.jpg"
+                              ? "/egMaterial.png"
                               : "/Default.jpg"
                           }
                           alt={`${seller.item.title} image`}
