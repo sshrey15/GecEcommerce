@@ -14,7 +14,6 @@ import { useHistory } from "react-router-dom";
 import Landing from "./components/Landing";
 import Loading from "./loading";
 
-
 export default function Home() {
   const [sellerData, setSellerData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -22,10 +21,11 @@ export default function Home() {
   const { session, data } = useSession();
   const [selectedOption, setSelectedOption] = useState("");
   const [isLoading, setIsloading] = useState(true);
+  
 
   useEffect(() => {
-    fetch(`https://ecomproject1.onrender.com/api/sellers`)
-    // fetch(`http://localhost:3001/api/sellers`)
+    // fetch(`https://ecomproject1.onrender.com/api/sellers`)
+    fetch(`http://localhost:3001/api/sellers`)
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
@@ -39,7 +39,7 @@ export default function Home() {
       });
   }, [session]);
 
-  const [itemsPerPage] = useState(8);
+  const [itemsPerPage] = useState(12);
 
   const filteredSellers = sellerData.filter(
     (seller) =>
@@ -84,21 +84,25 @@ export default function Home() {
   return (
     <div className="m-4 sm:m-10">
       {isLoading ? (
-        <Loading numCards={4} /> 
+        <Loading numCards={4} />
       ) : data?.user ? (
         <div className="flex flex-col min-h-screen ">
-          <select
-            value={selectedOption}
-            onChange={(e) => setSelectedOption(e.target.value)}
-            className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg my-5 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-          >
-            <option value="">All</option>
-            <option value="Bomber">Bomber</option>
-            <option value="Drafter">Drafter</option>
-            <option value="Boiler">Boiler</option>
-            <option value="Notes & Books">Notes & Books</option>
-            <option value="Engineering Graphics Material">Engineering Graphics Material</option>
-          </select>
+          {currentPage === 1 && (
+            <select
+              value={selectedOption}
+              onChange={(e) => setSelectedOption(e.target.value)}
+              className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg my-5 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">All</option>
+              <option value="Bomber">Bomber</option>
+              <option value="Drafter">Drafter</option>
+              <option value="Boiler">Boiler</option>
+              <option value="Notes & Books">Notes & Books</option>
+              <option value="Engineering Graphics Material">
+                Engineering Graphics Material
+              </option>
+            </select>
+          )}
           <div className="flex-grow">
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {isLoading ? (
@@ -124,7 +128,8 @@ export default function Home() {
                               ? "/boilers.png"
                               : seller.item.title === "Notes & Books"
                               ? "/booksNotes.jpg"
-                              : seller.item.title === "Engineering Graphics Material"
+                              : seller.item.title ===
+                                "Engineering Graphics Material"
                               ? "/egMaterial.png"
                               : "/Default.jpg"
                           }
@@ -240,6 +245,7 @@ export default function Home() {
           </div>
         </div>
       ) : (
+        
         <Landing />
       )}
     </div>

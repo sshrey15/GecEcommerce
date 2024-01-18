@@ -1,13 +1,19 @@
 "use client";
 import { useSession } from "next-auth/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useNavigate } from "react-router-dom";
+import Landing from "../components/Landing";
 
 function page() {
+
+  
   const router = useRouter();
+  const {session} = useSession();
   const { data } = useSession();
+
   const [sellerInfo, setSellerInfo] = useState({
     name: data?.user?.name,
     phone: "",
@@ -22,6 +28,14 @@ function page() {
     description: "" ,
     price: "",
   });
+
+  const Push = () =>{
+    
+
+    useEffect(() => {
+      router.push("/");
+    }, []);
+  }
 
 
 
@@ -62,8 +76,8 @@ function page() {
       item: itemInfo,
     };
     
-    fetch("https://ecomproject1.onrender.com/api/sellers",{
-    // fetch("http://localhost:3001/api/sellers", {
+    // fetch("https://ecomproject1.onrender.com/api/sellers",{
+    fetch("http://localhost:3001/api/sellers", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +99,9 @@ function page() {
   };
 
   return (
-    <div className="p-4 max-w-md mx-auto">
+
+    data?.user? (
+      <div className="p-4 max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-4">Seller Information</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         {/* Seller Information */}
@@ -117,14 +133,7 @@ function page() {
             className="w-full px-3 py-2 border rounded"
             required
           />
-          {/* <button className='
-          bg-blue-500 
-          hover:bg-blue-700
-          text-white
-          font-bold
-          rounded-lg
-
-          '  onSubmit={handlesendOtp}>Send OTP</button> */}
+    
         </div>
 
         <div className="mb-4">
@@ -159,7 +168,6 @@ function page() {
           />
         </div>
 
-        {/* Item Information */}
         <h2 className="text-2xl font-bold mb-4">Item Information</h2>
 
         <div className="mb-4">
@@ -233,6 +241,15 @@ function page() {
         </button>
       </form>
     </div>
+
+    ) : (
+      <>
+      <Push/>
+      <Landing/>
+      </>
+      
+    )
+    
   );
 }
 
