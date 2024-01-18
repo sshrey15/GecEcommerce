@@ -124,8 +124,8 @@ export default function Home() {
                               ? "/BoilerSuits.jpg"
                               : seller.item.title === "Notes & Books"
                               ? "/booksNotes.jpg"
-                              : seller.item.title === "Stationary"
-                              ? "/Stationary.jpg"
+                              : seller.item.title === "Engineering Graphics Material"
+                              ? "/egMaterial.jpg"
                               : "/Default.jpg"
                           }
                           alt={`${seller.item.title} image`}
