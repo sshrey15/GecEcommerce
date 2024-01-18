@@ -12,6 +12,8 @@ import Link from "next/link";
 import path from "path";
 import { useHistory } from "react-router-dom";
 import Landing from "./components/Landing";
+import Loading from "./loading";
+
 
 export default function Home() {
   const [sellerData, setSellerData] = useState([]);
@@ -19,15 +21,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const { session, data } = useSession();
   const [selectedOption, setSelectedOption] = useState("");
-  
-
-// Retrieve the submission date from local storage when the component mounts
-
-
-// ...
-
-// Display the submission date
-
+  const [isLoading, setIsloading] = useState(true);
 
   useEffect(() => {
     fetch(`https://ecomproject1.onrender.com/api/sellers`)
@@ -35,9 +29,13 @@ export default function Home() {
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
+
+        setIsloading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+
+        setIsloading(false);
       });
   }, [session]);
 
@@ -85,7 +83,9 @@ export default function Home() {
 
   return (
     <div className="m-4 sm:m-10">
-      {data?.user ? (
+      {isLoading ? (
+        <Loading numCards={4} /> 
+      ) : data?.user ? (
         <div className="flex flex-col min-h-screen ">
           <select
             value={selectedOption}
@@ -100,88 +100,88 @@ export default function Home() {
           </select>
           <div className="flex-grow">
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              {currentItems.map((seller) => (
-                <div
-                  key={seller._id}
-                  className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-full"
-                >
-                  <button
-                    onClick={() => handleDelete(seller._id)}
-                    class="absolute top-0 right-0 mt-2 mr-2 z-10 align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-6 rounded-lg bg-red-600 text-white shadow-md hover:bg-red-700 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                    type="button"
-                  >
-                    <AiOutlineClose />
-                  </button>
-
-                  <div className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
-                    <div>
-                      <Image
-                        key={0}
-                        src={
-                          seller.item.title === "Bomber"
-                            ? "/bomber.jpg"
-                            : seller.item.title === "Drafter"
-                            ? "/Drafter.jpeg"
-                            : seller.item.title === "Boiler"
-                            ? "/BoilerSuits.jpg"
-                            : seller.item.title === "Notes & Books"
-                            ? "/booksNotes.jpg"
-                            : seller.item.title === "Stationary"
-                            ? "/Stationary.jpg"
-                            : "/Default.jpg"
-                        }
-                        alt={`${seller.item.title} image`}
-                        layout="fill"
-                        objectFit="cover"
-                        loading="eager"
-                      />
-                    </div>
-                   
-                    <div class="absolute bottom-0 left-0 mb-2 ml-2 px-2 py-1 font-sans text-sm antialiased font-bold text-white bg-blue-600 rounded flex items-center">
-                      Sold By: {seller.seller.name}
-                    </div>
-                  </div>
-                  <div class="p-6">
-                    <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                      {seller.item.title}
-                    </h5>
-                    <p class="inline-block px-3 py-1 font-sans text-2xl antialiased font-bold leading-relaxed text-[#25D366] ">
-                      ₹{seller.item.price}/-
-                    </p>
-                    <p class="mt-2 text-gray-600">{seller.item.description}</p>{" "}
-                    {/* New paragraph for description */}
-                  </div>
-                  <div class="p-6 pt-0">
-                    {/* <Link
-                  href={{
-                    pathname: `/${seller._id}`,
-                    query: { sellerId: seller._id },
-                  }}
-                  key={seller._id}
-                > */}
-                    <div class="flex space-x-2 items-center">
-                      {/* </Link> */}
-                      <button
-                        class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-12 rounded-lg bg-green-600 text-white shadow-md hover:bg-green-700 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
-                        type="button"
-                        onClick={() =>
-                          window.open(
-                            `https://wa.me/+91${
-                              seller.seller.phone
-                            }?text=${escape(
-                              `Hello ${seller.seller.name}, this is an automated message from GecEcom website. I am interested in buying the product you listed: ${seller.item.title}, priced at ${seller.item.price}. Please respond at your earliest convenience. Thank you.`
-                            )}`,
-                            "_blank"
-                          )
-                        }
-                      >
-                        <FaWhatsapp className="inline-block mr-2" size={24} />
-                        Contact Seller
-                      </button>
-                    </div>
-                  </div>
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
                 </div>
-              ))}
+              ) : (
+                currentItems.map((seller) => (
+                  <div
+                    key={seller._id}
+                    className="relative flex flex-col mt-6 text-gray-700 bg-white shadow-md bg-clip-border rounded-xl w-full"
+                  >
+                    <div className="relative h-56 mx-4 -mt-6 overflow-hidden text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
+                      <div>
+                        <Image
+                          key={0}
+                          src={
+                            seller.item.title === "Bomber"
+                              ? "/bomber.jpg"
+                              : seller.item.title === "Drafter"
+                              ? "/Drafter.jpeg"
+                              : seller.item.title === "Boiler"
+                              ? "/BoilerSuits.jpg"
+                              : seller.item.title === "Notes & Books"
+                              ? "/booksNotes.jpg"
+                              : seller.item.title === "Stationary"
+                              ? "/Stationary.jpg"
+                              : "/Default.jpg"
+                          }
+                          alt={`${seller.item.title} image`}
+                          layout="fill"
+                          objectFit="cover"
+                          loading="eager"
+                        />
+                      </div>
+
+                      <div class="absolute bottom-0 left-0 mb-2 ml-2 px-2 py-1 font-sans text-sm antialiased font-bold text-white bg-blue-600 rounded flex items-center">
+                        Sold By: {seller.seller.name}
+                      </div>
+                    </div>
+                    <div class="p-6">
+                      <h5 class="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                        {seller.item.title}
+                      </h5>
+                      <p class="inline-block px-3 py-1 font-sans text-2xl antialiased font-bold leading-relaxed text-[#25D366] ">
+                        ₹{seller.item.price}/-
+                      </p>
+                      <p class="mt-2 text-gray-600">
+                        {seller.item.description}
+                      </p>{" "}
+                      {/* New paragraph for description */}
+                    </div>
+                    <div class="p-6 pt-0">
+                      {/* <Link
+                        href={{
+                          pathname: `/${seller._id}`,
+                          query: { sellerId: seller._id },
+                        }}
+                        key={seller._id}
+                      > */}
+                      <div class="flex space-x-2 items-center">
+                        {/* </Link> */}
+                        <button
+                          class="align-middle select-none font-sans font-bold text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 px-12 rounded-lg bg-green-600 text-white shadow-md hover:bg-green-700 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none"
+                          type="button"
+                          onClick={() =>
+                            window.open(
+                              `https://wa.me/+91${
+                                seller.seller.phone
+                              }?text=${escape(
+                                `Hello ${seller.seller.name}, this is an automated message from GecEcom website. I am interested in buying the product you listed: ${seller.item.title}, priced at ${seller.item.price}. Please respond at your earliest convenience. Thank you.`
+                              )}`,
+                              "_blank"
+                            )
+                          }
+                        >
+                          <FaWhatsapp className="inline-block mr-2" size={24} />
+                          Contact Seller
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
             </ul>
           </div>
           <div className=" mt-10">
