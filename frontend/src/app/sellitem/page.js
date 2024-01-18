@@ -192,7 +192,7 @@ function page() {
 
         <div className="mb-4">
           <label htmlFor="description" className="block">
-            Description:
+            Description: please provide the Information about the item you are selling
           </label>
           <textarea
             id="description"
