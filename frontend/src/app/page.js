@@ -15,6 +15,72 @@ import Landing from "./components/Landing";
 import Loading from "./loading";
 
 
+// export default function Home() {
+//   const [sellerData, setSellerData] = useState([]);
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const { session, data } = useSession();
+//   const [selectedOption, setSelectedOption] = useState("");
+//   const [isLoading, setIsloading] = useState(true);
+
+//   useEffect(() => {
+//     fetch(`https://ecomproject1.onrender.com/api/sellers`)
+//     // fetch(`http://localhost:3001/api/sellers`)
+//       .then((response) => response.json())
+//       .then((data) => {
+//         setSellerData(data);
+
+//         setIsloading(false);
+//       })
+//       .catch((error) => {
+//         console.error("Error fetching data:", error);
+
+//         setIsloading(false);
+//       });
+//   }, [session]);
+
+//   const [itemsPerPage] = useState(8);
+
+//   const filteredSellers = sellerData.filter(
+//     (seller) =>
+//       !selectedOption ||
+//       seller.item.title.toLowerCase() === selectedOption.toLowerCase()
+//   );
+
+//   const indexOfLastItem = currentPage * itemsPerPage;
+//   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+//   const currentItems = filteredSellers.slice(indexOfFirstItem, indexOfLastItem);
+
+//   const pageNumbers = [];
+//   for (let i = 1; i <= Math.ceil(filteredSellers.length / itemsPerPage); i++) {
+//     pageNumbers.push(i);
+//   }
+
+//   const renderPageNumbers = pageNumbers.map((number) => {
+//     return (
+//       <li
+//         key={number}
+//         id={number}
+//         onClick={() => setCurrentPage(number)}
+//         className={currentPage === number ? "active" : ""}
+//       >
+//         {number}
+//       </li>
+//     );
+//   });
+
+//   const handleNext = () => {
+//     if (currentPage < pageNumbers.length) {
+//       setCurrentPage(currentPage + 1);
+//     }
+//   };
+
+//   const handlePrevious = () => {
+//     if (currentPage > 1) {
+//       setCurrentPage(currentPage - 1);
+//     }
+//   };
+
 export default function Home() {
   const [sellerData, setSellerData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,27 +91,25 @@ export default function Home() {
 
   useEffect(() => {
     fetch(`https://ecomproject1.onrender.com/api/sellers`)
-    // fetch(`http://localhost:3001/api/sellers`)
       .then((response) => response.json())
       .then((data) => {
         setSellerData(data);
-
         setIsloading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
-
         setIsloading(false);
       });
   }, [session]);
 
-  const [itemsPerPage] = useState(8);
-
+  // Filter the entire list based on search term
   const filteredSellers = sellerData.filter(
     (seller) =>
       !selectedOption ||
       seller.item.title.toLowerCase() === selectedOption.toLowerCase()
   );
+
+  const [itemsPerPage] = useState(8);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
