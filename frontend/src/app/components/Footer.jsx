@@ -21,7 +21,7 @@ const Footer = () => {
                       <li class="mb-4">
                           <a href="https://github.com/sshrey15" class="hover:underline ">Github</a>
                       </li>
-                      <li>
+                      <li class="mb-4">
                           <a href="https://twitter.com/Shreysi29721576" class="hover:underline">Twitter</a>
                       </li>
                       <li>
@@ -35,7 +35,7 @@ const Footer = () => {
                       <li class="mb-4">
                           <a href="https://github.com/vishnuvariyar04" class="hover:underline ">Github</a>
                       </li>
-                      <li>
+                      <li class="mb-4">
                           <a href="https://twitter.com/VariyarVishnu" class="hover:underline">Twitter</a>
                       </li>
                       <li>
