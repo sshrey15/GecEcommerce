@@ -97,6 +97,7 @@ export default function Home() {
             <option value="Drafter">Drafter</option>
             <option value="Boiler">Boiler</option>
             <option value="Notes & Books">Notes & Books</option>
+            <option value="Engineering Graphics Material">Engineering Graphics Material</option>
           </select>
           <div className="flex-grow">
             <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -120,11 +121,11 @@ export default function Home() {
                               : seller.item.title === "Drafter"
                               ? "/Drafter.jpeg"
                               : seller.item.title === "Boiler"
-                              ? "/BoilerSuits.jpg"
+                              ? "/boilers.png"
                               : seller.item.title === "Notes & Books"
                               ? "/booksNotes.jpg"
-                              : seller.item.title === "Stationary"
-                              ? "/Stationary.jpg"
+                              : seller.item.title === "Engineering Graphics Material"
+                              ? "/egMaterial.png"
                               : "/Default.jpg"
                           }
                           alt={`${seller.item.title} image`}

@@ -177,7 +177,7 @@ function page() {
             <option value="Boiler">Boiler</option>
             <option value="Drafter">Drafter</option>
             <option value="Bomber">Bomber</option>
-            <option value="Stationary">Stationary</option>
+            <option value="Engineering Graphics Material">Engineering Graphics Material</option>
             <option value="Notes & Books">Notes & Books</option>
           </select>
         </div>
