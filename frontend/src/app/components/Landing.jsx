@@ -19,12 +19,12 @@ const Landing = () => {
                 <section class="bg-white">
                     <div class="container mx-auto px-6 py-16 text-center">
                         <div class="mx-auto w-1/2" >
-                            <h1 class="text-2xl w-full font-bold text-gray-800 lg:text-4xl">Buy and Sell Your College Essentials Seamlessly in a Single Click!</h1>
+                            <h1 class="text-2xl w-full font-bold text-gray-800 lg:text-4xl">College Essentials, One Click Away!</h1>
 
 
                         </div>
                         <div class="mx-auto w-3/4" >
-                            <p class="mt-6 text-gray-500">Empowering students to effortlessly access essential engineering course products, our platform revolutionizes the way academic materials are obtained. With a simple click, users can seamlessly connect with sellers, eliminating the need for intermediaries and avoiding additional commissions. We prioritize direct communication, ensuring a streamlined experience for both buyers and sellers in the educational marketplace.</p>
+                            <p class="mt-6 text-gray-500">Revolutionizing academic material access! Buy and sell engineering essentials with a simple click  no intermediaries, no commissions.</p>
                         </div>
                         <div className='h-1/2'>
   <Carousel className='h-50' autoPlay infiniteLoop>
