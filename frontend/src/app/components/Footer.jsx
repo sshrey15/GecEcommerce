@@ -8,7 +8,7 @@ const Footer = () => {
     <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div class="md:flex md:justify-between">
           <div class="mb-6 md:mb-0">
-              <a href="https://flowbite.com/" class="flex items-center">
+              <a href="" class="flex items-center">
                   
                   <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-grey">Gec<span className='text-blue-500'>Bazaar</span></span>
               </a>
@@ -24,6 +24,9 @@ const Footer = () => {
                       <li>
                           <a href="https://twitter.com/Shreysi29721576" class="hover:underline">Twitter</a>
                       </li>
+                      <li>
+                          <a href="https://www.instagram.com/sshreysingh/" class="hover:underline">Instagram</a>
+                      </li>
                   </ul>
               </div>
               <div>
@@ -34,6 +37,9 @@ const Footer = () => {
                       </li>
                       <li>
                           <a href="https://twitter.com/VariyarVishnu" class="hover:underline">Twitter</a>
+                      </li>
+                      <li>
+                          <a href="https://www.instagram.com/vishnuvariyar/" class="hover:underline">Instagram</a>
                       </li>
                   </ul>
               </div>
