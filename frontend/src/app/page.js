@@ -169,7 +169,7 @@ export default function Home() {
                               `https://wa.me/+91${
                                 seller.seller.phone
                               }?text=${escape(
-                                `Hello ${seller.seller.name}, this is an automated message from GecEcom website. I am interested in buying the product you listed: ${seller.item.title}, priced at ${seller.item.price}. Please respond at your earliest convenience. Thank you.`
+                                `Hello ${seller.seller.name}, greetings from GecBazaar! I'm interested in purchasing your listed product ${seller.item.title} priced at  ₹ ${seller.item.price}/- Please respond to your earliest convenience. Thank you!`
                               )}`,
                               "_blank"
                             )
