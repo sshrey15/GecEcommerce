@@ -192,13 +192,14 @@ function page() {
 
         <div className="mb-4">
           <label htmlFor="description" className="block">
-            Description: please provide the Information about the item you are selling
+            Description: 
           </label>
           <textarea
             id="description"
             name="description"
             value={itemInfo.description}
             onChange={handleItemChange}
+            label="please provide the Information about the item you are selling"
             className="w-full px-3 py-2 border rounded"
             required
           />
