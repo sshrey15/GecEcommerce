@@ -199,7 +199,7 @@ function page() {
             name="description"
             value={itemInfo.description}
             onChange={handleItemChange}
-            label="please provide the Information about the item you are selling"
+            placeholder="please provide the Information about the item you are selling"
             className="w-full px-3 py-2 border rounded"
             required
           />
