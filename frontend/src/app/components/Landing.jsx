@@ -19,10 +19,10 @@ const Landing = () => {
                 <section class="bg-white">
                     <div class="container mx-auto px-6 pb-16 pt-5 text-center">
                     <div class="mx-auto">
-                            <h1 class="text-3xl font-extrabold text-gray-800 lg:text-8xl">College <span className='text-blue-500'>Essentials</span>, <br /> One Click Away! </h1>
-                            <p class="mt-6 font-medium text-gray-500 text-2xl">Revolutionizing academic material access! Buy and sell engineering essentials with a simple click <br/> no intermediaries, no commissions.</p>
+                            <h1 class="text-5xl sm:text-7xl font-extrabold text-gray-800 lg:text-8xl">College <span className='text-blue-500'>Essentials</span>, <br /> One Click Away! </h1>
+                            <p class="mt-6 font-medium text-gray-500 text-xl sm:text-2xl">Revolutionizing academic material access! Buy and sell engineering essentials with a simple click <br/> no intermediaries, no commissions.</p>
                             <a href='/api/auth/signin?csrf=true'>
-                                <button className='bg-blue-500 hover:brightness-110 duration-300 py-4 font-semibold rounded-lg text-white text-xl px-10 mt-5'>Shop Now</button>
+                                <button className='bg-blue-500 hover:brightness-110 duration-300 py-3 sm:py-4 font-semibold rounded-lg text-white text-xl px-10 mt-5'>Shop Now</button>
                             </a>
                         </div>
                         <div className='h-full  lg:h-1/2'>
@@ -53,7 +53,7 @@ const Landing = () => {
 
                 <section class="bg-white pb-16">
                     <div class="container mx-auto px-6 py-10">
-                        <h1 class="text-center text-3xl font-semibold capitalize text-gray-800 lg:text-5xl">Products</h1>
+                        <h1 class="text-center text-4xl font-semibold capitalize text-gray-800 md::text-5xl">Products</h1>
 
                         <p class="mt-4 text-center text-gray-500 text-xl">List your products like Boilers,Drafters,Books,Bombers etc...</p>
 
