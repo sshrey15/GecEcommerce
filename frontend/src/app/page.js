@@ -29,16 +29,18 @@ export default function Home() {
     window.history.pushState(null, null, );
   
     const handleBackButton = (event) => {
-      event.preventDefault(); // Prevent the back button from working
-      const userConfirmed = window.confirm('Do you want to logout?');
-      if (userConfirmed) {
-        signOut(); // Only sign out if the user confirmed
-      } else {
-        // Re-push the "dummy" state into the history
-        window.history.pushState(null, null, window.location.pathname);
+      // Only show the alert if the user is navigating back to a previous page
+      if (window.history.state !== null) {
+        event.preventDefault(); // Prevent the back button from working
+        const userConfirmed = window.confirm('Do you want to logout?');
+        if (userConfirmed) {
+          signOut(); // Only sign out if the user confirmed
+        } else {
+          // Re-push the "dummy" state into the history
+          window.history.pushState(null, null, window.location.pathname);
+        }
       }
     };
-  
     window.addEventListener('popstate', handleBackButton);
   
     return () => {
