@@ -24,8 +24,11 @@ const Footer = () => {
                       <li class="mb-4">
                           <a href="https://twitter.com/Shreysi29721576" class="hover:underline">Twitter</a>
                       </li>
-                      <li>
+                      <li class="mb-4">
                           <a href="https://www.instagram.com/sshreysingh/" class="hover:underline">Instagram</a>
+                      </li>
+                      <li>
+                          <a href="https://www.linkedin.com/in/sshrey15/" class="hover:underline">LinkedIn</a>
                       </li>
                   </ul>
               </div>
@@ -38,8 +41,11 @@ const Footer = () => {
                       <li class="mb-4">
                           <a href="https://twitter.com/VariyarVishnu" class="hover:underline">Twitter</a>
                       </li>
-                      <li>
+                      <li class="mb-4">
                           <a href="https://www.instagram.com/vishnuvariyar/" class="hover:underline">Instagram</a>
+                      </li>
+                      <li>
+                          <a href="https://www.linkedin.com/in/vishnu-variyar-7aa17321b/" class="hover:underline">LinkedIn</a>
                       </li>
                   </ul>
               </div>
