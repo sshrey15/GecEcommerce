@@ -6,10 +6,12 @@ import { FaWhatsapp } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import Navbar from "./components/Navbar";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import {  signOut } from 'next-auth/react'
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import path from "path";
+
 import { useHistory } from "react-router-dom";
 import Landing from "./components/Landing";
 import Loading from "./loading";
@@ -23,6 +25,29 @@ export default function Home() {
   const [isLoading, setIsloading] = useState(true);
 
   useEffect(() => {
+    // Push a "dummy" state into the history
+    window.history.pushState(null, null, );
+  
+    const handleBackButton = (event) => {
+      event.preventDefault(); // Prevent the back button from working
+      const userConfirmed = window.confirm('Do you want to logout?');
+      if (userConfirmed) {
+        signOut(); // Only sign out if the user confirmed
+      } else {
+        // Re-push the "dummy" state into the history
+        window.history.pushState(null, null, window.location.pathname);
+      }
+    };
+  
+    window.addEventListener('popstate', handleBackButton);
+  
+    return () => {
+      window.removeEventListener('popstate', handleBackButton);
+    };
+  }, []);
+
+  useEffect(() => {
+  
     fetch(`https://ecomproject1.onrender.com/api/sellers`)
       // fetch(`http://localhost:3001/api/sellers`)
       .then((response) => response.json())
@@ -97,6 +122,7 @@ export default function Home() {
               <option value="Drafter">Drafter</option>
               <option value="Boiler">Boiler</option>
               <option value="Notes & Books">Notes & Books</option>
+              <option value="Engineering Graphics Material">Engineering Graphics Material</option>
             </select>
           )}
           <div className="flex-grow">
