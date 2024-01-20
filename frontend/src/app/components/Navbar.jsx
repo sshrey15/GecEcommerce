@@ -12,7 +12,7 @@ const Navbar = () => {
   const router = useRouter();
 
   return (
-    <nav className="bg-white drop-shadow-lg sticky top-0 z-50">
+    <nav className="bg-white sticky top-0 z-50">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4 md:flex-row">
         <a className="flex items-center">
           <span className="text-2xl font-semibold whitespace-nowrap text-black sm:text-lg">Gec<span className='text-blue-500'>Bazaar</span></span>
