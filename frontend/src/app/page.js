@@ -46,22 +46,26 @@ export default function Home() {
     return () => {
       window.removeEventListener("popstate", handleBackButton);
     };
-  }, []);
+  }, [session]);
 
   useEffect(() => {
-    fetch(`https://ecomproject1.onrender.com/api/sellers`)
-      // fetch(`http://localhost:3001/api/sellers`)
-      .then((response) => response.json())
-      .then((data) => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`https://ecomproject1.onrender.com/api/sellers`);
+        // const response = await fetch(`http://localhost:3001/api/sellers`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
         setSellerData(data);
-
-        setIsloading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching data:", error);
-
+      } finally {
         setIsloading(false);
-      });
+      }
+    };
+  
+    fetchData();
   }, [session]);
 
   const [itemsPerPage] = useState(8);
