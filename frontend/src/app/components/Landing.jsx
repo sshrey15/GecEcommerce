@@ -2,11 +2,11 @@ import React from 'react'
 
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Link from 'next/link'
+
 const teamMembers = [
     { name: 'Member 1', image: '/path/to/image1.jpg' },
     { name: 'Member 2', image: '/path/to/image2.jpg' },
-    // Add more team members as needed
+
 ]
 
 const Landing = () => {

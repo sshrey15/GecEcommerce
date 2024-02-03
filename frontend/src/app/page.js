@@ -1,24 +1,37 @@
 "use client";
-import Modal from "./components/Modal";
+
+
 import Image from "next/image";
-import { FaTimes } from "react-icons/fa";
-import { FaWhatsapp } from "react-icons/fa";
-import { AiOutlineClose } from "react-icons/ai";
-import Navbar from "./components/Navbar";
-import { useSession } from "next-auth/react";
-import { signOut } from "next-auth/react";
-
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import path from "path";
-
-import { useHistory } from "react-router-dom";
+import dynamic from "next/dynamic";
+import { useCallback,useMemo,useEffect,useState } from "react";
+import { useSession,signOut } from "next-auth/react";
 import Landing from "./components/Landing";
 import Loading from "./loading";
 
+const getImageSource = (title) => {
+  switch (title) {
+    case "Bomber":
+      return "/bomber.jpg";
+    case "Drafter":
+      return "/Drafter.jpeg";
+    case "Boiler":
+      return "/boilers.png";
+    case "Notes & Books":
+      return "/booksNotes.jpg";
+    case "Engineering Graphics Material":
+      return "/egMaterial.png";
+    default:
+      return "/Default.jpg";
+  }
+};
+
+const FaWhatsapp = dynamic(() => import('react-icons/fa').then((mod) => mod.FaWhatsapp), {
+  ssr: false, // This line is important. It disables server-side render for this component.
+});
 export default function Home() {
   const [sellerData, setSellerData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [fetchError, setFetchError] = useState(null);
+
   const [currentPage, setCurrentPage] = useState(1);
   const { session, data } = useSession();
   const [selectedOption, setSelectedOption] = useState("");
@@ -52,38 +65,43 @@ export default function Home() {
     const fetchData = async () => {
       try {
         const response = await fetch(`https://ecomproject1.onrender.com/api/sellers`);
-        // const response = await fetch(`http://localhost:3001/api/sellers`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        setSellerData(data);
+        if (JSON.stringify(data) !== JSON.stringify(sellerData)) {
+          setSellerData(data);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
+        setFetchError(error);
       } finally {
         setIsloading(false);
       }
     };
+    
   
     fetchData();
   }, [session]);
 
   const [itemsPerPage] = useState(8);
 
-  const filteredSellers = sellerData.filter(
+  const filteredSellers = useMemo(() => sellerData.filter(
     (seller) =>
       !selectedOption ||
       seller.item.title.toLowerCase() === selectedOption.toLowerCase()
-  );
+  ), [sellerData, selectedOption]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredSellers.slice(indexOfFirstItem, indexOfLastItem);
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(filteredSellers.length / itemsPerPage); i++) {
-    pageNumbers.push(i);
-  }
+  const currentItems = useMemo(() => filteredSellers.slice(indexOfFirstItem, indexOfLastItem), [filteredSellers, indexOfFirstItem, indexOfLastItem]);
+  const pageNumbers = useMemo(() =>{
+    const numbers = [];
+    for (let i = 1; i <= Math.ceil(filteredSellers.length / itemsPerPage); i++) {
+      numbers.push(i);
+    }
+    return numbers;
+  },[filteredSellers.length, itemsPerPage])
 
   const renderPageNumbers = pageNumbers.map((number) => {
     return (
@@ -98,17 +116,19 @@ export default function Home() {
     );
   });
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     if (currentPage < pageNumbers.length) {
-      setCurrentPage(currentPage + 1);
+      setCurrentPage(prevPage => prevPage + 1);
     }
-  };
+  }, [currentPage, pageNumbers.length]);
 
-  const handlePrevious = () => {
+  const handlePrevious = useCallback(() => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      setCurrentPage(prevPage => prevPage - 1);
     }
-  };
+  }, [currentPage]);
+
+  
 
   return (
     <div className="m-4 sm:m-10">
@@ -148,20 +168,7 @@ export default function Home() {
                       <div>
                         <Image
                           key={0}
-                          src={
-                            seller.item.title === "Bomber"
-                              ? "/bomber.jpg"
-                              : seller.item.title === "Drafter"
-                              ? "/Drafter.jpeg"
-                              : seller.item.title === "Boiler"
-                              ? "/boilers.png"
-                              : seller.item.title === "Notes & Books"
-                              ? "/booksNotes.jpg"
-                              : seller.item.title ===
-                                "Engineering Graphics Material"
-                              ? "/egMaterial.png"
-                              : "/Default.jpg"
-                          }
+                          src={  getImageSource(seller.item.title)}
                           alt={`${seller.item.title} image`}
                           layout="fill"
                           objectFit="cover"

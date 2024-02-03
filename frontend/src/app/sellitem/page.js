@@ -3,9 +3,8 @@ import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
-import { useNavigate } from "react-router-dom";
+
 import Landing from "../components/Landing";
 
 function page() {
